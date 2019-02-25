@@ -1,0 +1,19 @@
+{% extends 'courseinfo/base.html' %}
+
+{% block title %}
+    Instructor - {{ instructor }}
+{% endblock %}
+
+{% block content %}
+    <h2>{{ semester }}</h2>
+
+    <section>
+        <table>
+            <tr>
+                <th>Semester name:</th>
+                <td>{{ semester.semester_name }}</td>
+            </tr>
+        </table>
+    </section>
+
+{% endblock %}

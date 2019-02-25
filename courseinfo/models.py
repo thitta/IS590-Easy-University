@@ -57,9 +57,9 @@ class Student(models.Model):
 class Section(models.Model):
     section_id = models.AutoField(primary_key=True)
     section_name = models.CharField(max_length=10)
-    semester = models.ForeignKey(Semester, related_name="section", on_delete=models.PROTECT)
+    semester = models.ForeignKey(Semester, related_name="sections", on_delete=models.PROTECT)
     course = models.ForeignKey(Course, related_name="sections", on_delete=models.PROTECT)
-    instructor = models.ForeignKey(Instructor, related_name="section", on_delete=models.PROTECT)
+    instructor = models.ForeignKey(Instructor, related_name="sections", on_delete=models.PROTECT)
 
     def __str__(self):
         return f"{self.course.course_number} - {self.section_name} ({self.semester.semester_name})"
@@ -70,8 +70,8 @@ class Section(models.Model):
 
 class Registration(models.Model):
     registration_id = models.AutoField(primary_key=True)
-    student = models.ForeignKey(Student, related_name="registration", on_delete=models.PROTECT)
-    section = models.ForeignKey(Section, related_name="registration", on_delete=models.PROTECT)
+    student = models.ForeignKey(Student, related_name="registrations", on_delete=models.PROTECT)
+    section = models.ForeignKey(Section, related_name="registrations", on_delete=models.PROTECT)
 
     def __str__(self):
         return f"{self.section} / {self.student})"
