@@ -30,7 +30,6 @@ class InstructorDetail(View):
 
     def get(self, request, pk):
         instructor = get_object_or_404(Instructor, pk=pk)
-        section_list = instructor.sections.all()
         context = {
             "instructor": instructor,
             "section_list": instructor.sections.all(),

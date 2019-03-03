@@ -11,7 +11,7 @@
         <table>
             <tr>
                 <th>Course Number:</th>
-                <td><a href="">{{ course.course_number }}</a></td>
+                <td>{{ course.course_number }}</td>
             </tr>
             <tr>
                 <th>Course Name:</th>
@@ -25,7 +25,7 @@
         <ul>
             {% for section in section_list %}
                 <li>
-                    <a href="">{{ section.semester }}</a>
+                    <a href="{{ section.get_absolute_url }}">{{ section.semester }}</a>
                 </li>
             {% empty %}
                 <li><em>There are currently no related section.</em></li>

@@ -10,7 +10,7 @@
     <h2>Instructor List</h2>
     <ul>
         {%for instructor in instructor_list%}
-            <li><a href = "">{{instructor}}</a></li>
+            <li><a href = "{{ instructor.get_absolute_url }}">{{instructor}}</a></li>
         {% empty %}
             <li><em>There are currently no instructors available.</em></li>
         {% endfor %}

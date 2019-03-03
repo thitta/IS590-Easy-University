@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Semester(models.Model):
@@ -7,6 +8,10 @@ class Semester(models.Model):
 
     def __str__(self):
         return f"{self.semester_name}"
+
+    def get_absolute_url(self):
+        return reverse("courseinfo_semester_detail_urlpattern",
+                       kwargs={"pk": self.pk})
 
     class Meta:
         ordering = ["semester_name"]
@@ -20,6 +25,10 @@ class Course(models.Model):
     def __str__(self):
         return f"{self.course_number} - {self.course_name}"
 
+    def get_absolute_url(self):
+        return reverse("courseinfo_course_detail_urlpattern",
+                       kwargs={"pk": self.pk})
+
     class Meta:
         ordering = ["course_number", "course_name"]
         unique_together = (("course_number", "course_name"),)
@@ -32,6 +41,10 @@ class Instructor(models.Model):
 
     def __str__(self):
         return f"{self.last_name}, {self.first_name}"
+
+    def get_absolute_url(self):
+        return reverse("courseinfo_instructor_detail_urlpattern",
+                       kwargs={"pk": self.pk})
 
     class Meta:
         ordering = ["last_name", "first_name"]
@@ -49,6 +62,10 @@ class Student(models.Model):
             return f"{self.last_name}, {self.first_name}"
         return f"{self.last_name}, {self.first_name} ({self.nickname})"
 
+    def get_absolute_url(self):
+        return reverse("courseinfo_student_detail_urlpattern",
+                       kwargs={"pk": self.pk})
+
     class Meta:
         ordering = ["last_name", "first_name", "nickname"]
         unique_together = (("last_name", "first_name", "nickname"),)
@@ -61,6 +78,10 @@ class Section(models.Model):
     course = models.ForeignKey(Course, related_name="sections", on_delete=models.PROTECT)
     instructor = models.ForeignKey(Instructor, related_name="sections", on_delete=models.PROTECT)
 
+    def get_absolute_url(self):
+        return reverse("courseinfo_section_detail_urlpattern",
+                       kwargs={"pk": self.pk})
+
     def __str__(self):
         return f"{self.course.course_number} - {self.section_name} ({self.semester.semester_name})"
 
@@ -72,6 +93,10 @@ class Registration(models.Model):
     registration_id = models.AutoField(primary_key=True)
     student = models.ForeignKey(Student, related_name="registrations", on_delete=models.PROTECT)
     section = models.ForeignKey(Section, related_name="registrations", on_delete=models.PROTECT)
+
+    def get_absolute_url(self):
+        return reverse("courseinfo_registration_detail_urlpattern",
+                       kwargs={"pk": self.pk})
 
     def __str__(self):
         return f"{self.section} / {self.student})"

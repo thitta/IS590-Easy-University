@@ -29,7 +29,7 @@
         <ul>
             {% for registration in registration_list %}
                 <li>
-                    <a href="">{{ registration.section }}</a>
+                    <a href="{{ registration.section.get_absolute_url }}">{{ registration.section }}</a>
                 </li>
             {% empty %}
                 <li><em>There are currently no related sections.</em></li>
