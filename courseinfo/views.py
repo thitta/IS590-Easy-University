@@ -344,7 +344,6 @@ class SemesterDetail(View):
         semester = get_object_or_404(Semester, pk=pk)
         context = {
             "semester": semester,
-            "semester_name": semester.semester_name,
         }
         return render(request,
                       template_name="courseinfo/semester_detail.html",

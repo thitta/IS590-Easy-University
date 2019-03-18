@@ -1,6 +1,6 @@
 from django import forms
 
-from courseinfo.models import Course, Instructor, Registration, Semester, Student
+from courseinfo.models import Course, Instructor, Registration, Semester, Student, Section
 
 
 class CourseForm(forms.ModelForm):
@@ -23,7 +23,7 @@ class InstructorForm(forms.ModelForm):
 
 class SectionForm(forms.ModelForm):
     class Meta:
-        model = Instructor
+        model = Section
         fields = "__all__"
 
 

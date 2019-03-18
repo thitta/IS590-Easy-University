@@ -1,19 +1,15 @@
 {% extends "courseinfo/base.html" %}
 
 {% block title %}
-    Delete Instructor
+    Update Course
 {% endblock %}
 
 {% block content %}
     <form
-        action = "{{instructor.get_delete_url}}"
+        action = "{{course.get_update_url}}"
         method = "post">
         {% csrf_token %}
         {{form.as_p}}
-        <p>
-            Are you sure that you want ot delete instructor {{instructor}}?
-        </p>
-        <a href="{{instructor.get_absolute_url}}">cancel</a>
-        <button type="submit">Delete</button>
+        <button type="submit">Update</button>
     </form>
 {% endblock %}

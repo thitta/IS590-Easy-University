@@ -2,12 +2,36 @@ from django.db import models
 from django.urls import reverse
 
 
-class Semester(models.Model):
-    semester_id = models.AutoField(primary_key=True)
-    semester_name = models.CharField(max_length=45, unique=True)
+class Year(models.Model):
+    year_id = models.AutoField(primary_key=True)
+    year = models.IntegerField(unique=True)
 
     def __str__(self):
-        return f"{self.semester_name}"
+        return str(self.year)
+
+    class Meta:
+        ordering = ["year"]
+
+
+class Period(models.Model):
+    period_id = models.AutoField(primary_key=True)
+    period_sequence = models.IntegerField(unique=True)
+    period_name = models.CharField(max_length=45, unique=True)
+
+    def __str__(self):
+        return "%s" % self.period_name
+
+    class Meta:
+        ordering = ["period_sequence"]
+
+
+class Semester(models.Model):
+    semester_id = models.AutoField(primary_key=True)
+    period = models.ForeignKey(Period, related_name="semesters", on_delete=models.PROTECT)
+    year = models.ForeignKey(Year, related_name="semesters", on_delete=models.PROTECT)
+
+    def __str__(self):
+        return f"{self.year.year} - {self.period.period_name}"
 
     def get_absolute_url(self):
         return reverse("courseinfo_semester_detail_urlpattern",
@@ -22,7 +46,8 @@ class Semester(models.Model):
                        kwargs={"pk": self.pk})
 
     class Meta:
-        ordering = ["semester_name"]
+        ordering = ["year__year", "period__period_sequence"]
+        unique_together = ["year", "period"]
 
 
 class Course(models.Model):
@@ -123,7 +148,7 @@ class Section(models.Model):
                        kwargs={"pk": self.pk})
 
     def __str__(self):
-        return f"{self.course.course_number} - {self.section_name} ({self.semester.semester_name})"
+        return f"{self.course.course_number} - {self.section_name} ({self.semester.__str__()})"
 
     class Meta:
         ordering = ["course__course_number", "section_name", "semester__semester_name"]
