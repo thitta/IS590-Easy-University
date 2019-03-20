@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 
@@ -104,13 +105,32 @@ class InstructorDetail(View):
 
 
 class InstructorList(View):
+    paginate_by = 25
+    template_name = "courseinfo/instructor_list.html"
+    query_str_key = "page"
 
     def get(self, request):
-        return render(
-            request,
-            template_name="courseinfo/instructor_list.html",
-            context={"instructor_list": Instructor.objects.all()}
-        )
+        # SELECT and pagination
+        instructors = Instructor.objects.all()
+        paginator = Paginator(object_list=instructors, per_page=self.paginate_by)
+        page_number = request.GET.get(self.query_str_key)
+        try:
+            page = paginator.page(page_number)
+        except PageNotAnInteger:
+            page = paginator.page(1)
+        except EmptyPage:
+            page = paginator.page(paginator.num_pages)
+        prev_url = f"?{self.query_str_key}={page.previous_page_number()}" if page.has_previous() else None
+        next_url = f"?{self.query_str_key}={page.next_page_number()}" if page.has_next() else None
+        context = {
+            "paginator": paginator,
+            "is_paginated": page.has_other_pages(),
+            "next_page_url": next_url,
+            "previous_page_url": prev_url,
+            "instructor_list": page,
+        }
+        # return
+        return render(request, template_name=self.template_name, context=context)
 
 
 class InstructorCreate(ObjectCreateMixin, View):
@@ -436,13 +456,32 @@ class StudentDetail(View):
 
 
 class StudentList(View):
+    paginate_by = 25
+    template_name = "courseinfo/student_list.html"
+    query_str_key = "page"
 
     def get(self, request):
-        return render(
-            request,
-            template_name="courseinfo/student_list.html",
-            context={"student_list": Student.objects.all()}
-        )
+        # SELECT and pagination
+        students = Student.objects.all()
+        paginator = Paginator(object_list=students, per_page=self.paginate_by)
+        page_number = request.GET.get(self.query_str_key)
+        try:
+            page = paginator.page(page_number)
+        except PageNotAnInteger:
+            page = paginator.page(1)
+        except EmptyPage:
+            page = paginator.page(paginator.num_pages)
+        prev_url = f"?{self.query_str_key}={page.previous_page_number()}" if page.has_previous() else None
+        next_url = f"?{self.query_str_key}={page.next_page_number()}" if page.has_next() else None
+        context = {
+            "paginator": paginator,
+            "is_paginated": page.has_other_pages(),
+            "next_page_url": next_url,
+            "previous_page_url": prev_url,
+            "student_list": page,
+        }
+        # return
+        return render(request, template_name=self.template_name, context=context)
 
 
 class StudentCreate(ObjectCreateMixin, View):
