@@ -1,23 +1,23 @@
 {% extends "courseinfo/base.html" %}
 
 {% block title %}
-    Error Deleting Instructor
+    Error Deleting Course
 {% endblock %}
 
 {% block content %}
     <div>
         <h2>Error While Deleting</h2>
         <p>
-            You can't delete instructor {{ instructor }}.
+            You can't delete course {{ course }}.
             Since it's assigned to sections:
         </p>
         <ul>
-            {% for section in sections %}
+            {% for section in course.sections.all %}
                 <li><a href="{{ section.get_absolute_url }}">{{ section }}</a></li>
             {% endfor %}
         </ul>
         <p>
-            <a href="{% url 'courseinfo_instructor_list_urlpattern' %}">Go Back</a>
+            <a href="{% url 'courseinfo_course_list_urlpattern' %}">Go Back</a>
         </p>
     </div>
 {% endblock %}

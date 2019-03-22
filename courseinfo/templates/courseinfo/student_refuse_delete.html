@@ -1,23 +1,23 @@
 {% extends "courseinfo/base.html" %}
 
 {% block title %}
-    Error Deleting Section
+    Error Deleting Student
 {% endblock %}
 
 {% block content %}
     <div>
         <h2>Error While Deleting</h2>
         <p>
-            You can't delete section {{ section }}.
-            Since it's assigned to registrations:
+            You can't delete student {{ student }}.
+            Since it's assigned to sections:
         </p>
         <ul>
-            {% for registration in registrations %}
+            {% for registration in student.registrations.all %}
                 <li><a href="{{ registration.get_absolute_url }}">{{ registration }}</a></li>
             {% endfor %}
         </ul>
         <p>
-            <a href="{% url 'courseinfo_section_list_urlpattern' %}">Go Back</a>
+            <a href="{% url 'courseinfo_student_list_urlpattern' %}">Go Back</a>
         </p>
     </div>
 {% endblock %}
