@@ -1,0 +1,12 @@
+# change setting file
+
+DJANGO_SETTINGS_MODULE=shawn_lee_ez_university.settings.development
+DJANGO_SETTINGS_MODULE=shawn_lee_ez_university.settings.production
+
+# run server on differnt settings
+
+python manage.py runserver --settings=shawn_lee_ez_university.settings.development
+python manage.py runserver --settings=shawn_lee_ez_university.settings.production
+
+# create super user
+python manage.py createsuperuser

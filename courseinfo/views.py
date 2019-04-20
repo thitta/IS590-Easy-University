@@ -164,12 +164,6 @@ class SectionList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     # context => model.objects.all()
     permission_required = "courseinfo.view_section"
     model = Section
-    # def get(self, request):
-    #     return render(
-    #         request,
-    #         template_name="courseinfo/section_list.html",
-    #         context={"section_list": Section.objects.all()}
-    #     )
 
 
 class SectionCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
