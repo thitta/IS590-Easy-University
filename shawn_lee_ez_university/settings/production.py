@@ -10,5 +10,5 @@ DATABASES = {
 }
 
 ALLOWED_HOSTS = [
-    'localhost', '127.0.0.1', 'thittalee.pythonanywhere.com'
+    'thittalee.pythonanywhere.com'
 ]

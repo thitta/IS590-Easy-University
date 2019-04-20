@@ -253,7 +253,7 @@ class StudentDetail(LoginRequiredMixin, PermissionRequiredMixin, View):
 
 class StudentList(LoginRequiredMixin, PermissionRequiredMixin, PageLinksMixin, ListView):
     paginate_by = 25
-    model = Instructor
+    model = Student
     permission_required = "courseinfo.view_student"
 
 
